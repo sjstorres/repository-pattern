@@ -78,13 +78,10 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request): JsonResponse
+    public function update(StoreOrderRequest $request): JsonResponse
     {
         $orderId = $request->route('id');
-        $orderDetails = $request->only([
-            'client',
-            'details'
-        ]);
+        $orderDetails = $request->validated();
 
         return response()->json([
             'data' => $this->orderRepository->updateOrder($orderId, $orderDetails)
