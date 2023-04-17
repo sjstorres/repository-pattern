@@ -6,12 +6,15 @@ use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Repositories\Orders\IOrdersRepository;
+use App\Traits\CanFormatResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Log;
+Log::debug(env('SAMPLE'));
 class OrderController extends Controller
 {
+    use CanFormatResponse;
     private IOrdersRepository $orderRepository;
 
     public function __construct(IOrdersRepository $orderRepository)
@@ -24,9 +27,11 @@ class OrderController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json([
-            'data' => $this->orderRepository->getAllOrders()
-        ]);
+        // return response()->json([
+        //     'data' => $this->orderRepository->getAllOrders()
+        // ]);
+        return $this->success($this->orderRepository->getAllOrders()->all());
+        
     }
 
     /**
@@ -52,7 +57,6 @@ class OrderController extends Controller
         ], 
         Response::HTTP_CREATED
         );
-
     }
 
     /**
