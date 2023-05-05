@@ -4,7 +4,7 @@ namespace App\Repositories\Orders;
 
 interface IOrdersRepository
 {
-    public function getAllOrders();
+    public function getAllOrders(array $orderDetails);
     public function getOrderById($orderId);
     public function deleteOrder($orderId);
     public function createOrder(array $orderDetails);

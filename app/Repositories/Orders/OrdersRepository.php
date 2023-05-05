@@ -4,12 +4,20 @@ namespace App\Repositories\Orders;
 
 use App\Repositories\Orders\IOrdersRepository;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class OrdersRepository implements IOrdersRepository
 {
-    public function getAllOrders()
+    public function getAllOrders(array $orderDetails)
     {
-        return Order::all();
+        return DB::table('orders')
+            ->select('client', 'details')
+            ->where([
+                ['client', $orderDetails['client']],
+                ['details', $orderDetails['details']]
+            ])
+            ->get();
+        //return Order::all();
     }
 
     public function getOrderById($orderId)

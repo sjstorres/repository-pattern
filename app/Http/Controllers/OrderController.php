@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Http\Requests\OrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Repositories\Orders\IOrdersRepository;
@@ -25,12 +26,13 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(OrderRequest $request): JsonResponse
     {
         // return response()->json([
         //     'data' => $this->orderRepository->getAllOrders()
         // ]);
-        return $this->success($this->orderRepository->getAllOrders()->all());
+        $orderDetails = $request->validated();
+        return $this->success($this->orderRepository->getAllOrders($orderDetails)->all());
         
     }
 
