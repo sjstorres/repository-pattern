@@ -8,19 +8,28 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Repositories\Orders\IOrdersRepository;
 use App\Traits\CanFormatResponse;
+use App\Traits\SecretKeys;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-Log::debug(env('SAMPLE'));
+//for google secret manager
+use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
+
+
+
 class OrderController extends Controller
 {
     use CanFormatResponse;
+    use SecretKeys;
     private IOrdersRepository $orderRepository;
+
 
     public function __construct(IOrdersRepository $orderRepository)
     {
         $this->orderRepository = $orderRepository;
+        
+
     }
 
     /**
@@ -31,8 +40,24 @@ class OrderController extends Controller
         // return response()->json([
         //     'data' => $this->orderRepository->getAllOrders()
         // ]);
-        $orderDetails = $request->validated();
-        return $this->success($this->orderRepository->getAllOrders($orderDetails)->all());
+            // $orderDetails = $request->validated();
+            // $projectId = 'petnet-usp-dev-1';
+            // $secretId = 'keyJson';
+            // $versionId = '1';
+            // $client = new SecretManagerServiceClient();
+            // $name = $client->secretVersionName($projectId, $secretId, $versionId);
+            // $secret = $client->getSecretVersion($name);
+            // $response = $client->accessSecretVersion($secret->getName());
+            // $payload = $response->getPayload()->getData();
+            // //sample logging in storage/logs/laravel.log
+            // //needs "use Illuminate\Support\Facades\Log";
+            // $convert = json_decode($payload, true);
+            $username = $this->secrets("username");
+             Log::debug($username);
+
+
+            return $this->success([$username]);
+        //return $this->success([$convert["username"]]);
         
     }
 
