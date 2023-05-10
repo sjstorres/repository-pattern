@@ -35,6 +35,13 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function displaySecret(): JsonResponse
+    {
+            $username = $this->secrets("username");
+            return $this->success([$username]);
+        
+    }
+
     public function index(OrderRequest $request): JsonResponse
     {
         // return response()->json([
@@ -53,7 +60,7 @@ class OrderController extends Controller
             // //needs "use Illuminate\Support\Facades\Log";
             // $convert = json_decode($payload, true);
             $username = $this->secrets("username");
-             Log::debug($username);
+            //  Log::debug($username);
 
 
             return $this->success([$username]);

@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('secret', [OrderController::class, 'displaySecret']);
+
 Route::get('orders', [OrderController::class, 'index']);
 Route::get('orders/{id}', [OrderController::class, 'show']);
 Route::post('orders', [OrderController::class, 'store']);

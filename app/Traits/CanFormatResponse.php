@@ -16,4 +16,13 @@ trait CanFormatResponse
         ]);
     }
 
+    public function created(array $result): JsonResponse
+    {
+        return response()->json([
+            'code'     => '201',
+            'message'  => 'Created Entry',
+            'result'   => $result
+        ]);
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class StoreTmxRequest extends FormRequest
 {
@@ -22,7 +23,10 @@ class StoreTmxRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'response' => 'required|array'
+            'crn' => 'required|string',
+            'request.name' => 'required|string',
+            'request.ip-address' => 'required|string'
         ];
+
     }
 }

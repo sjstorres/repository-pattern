@@ -25,14 +25,10 @@ class TmxController extends Controller
     {
         $requestDetails = $request->validated();
         //return $this->success($this->tmxRepository->storeRequest($requestDetails));
-        return response()->json([
-            'data' => $this->tmxRepository->storeRequest($requestDetails)
-        ], 
-        Response::HTTP_CREATED
-        );
+        return $this->created([$this->tmxRepository->storeRequest($requestDetails)]);
     }
 
-    public function storeResponse($id, UpdateTmxResponse $response):JsonResponse 
+    public function storeResponse(UpdateTmxResponse $response):JsonResponse 
     {
         $responseDetails = $response->validated();
         $logId = $response->route('id');
